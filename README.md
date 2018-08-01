@@ -233,3 +233,93 @@ Printing friendly tricks
   }
 }
 ```
+
+## 1.3 UI Selector
+
+### 1.3.1 Form related selectors
+
+input
+
+- :disabled :enabled
+- :checked
+- :required :optional
+- :valid :invalid
+- :in-range :out-of-range
+
+```css
+input[type="checkbox"]:checked + label {
+  color: red;
+}
+```
+
+How to read:
+a `label` that comming immeditely after a `checked input` which type is `checkbox` has the color `red`.
+
+`:invalid` and `:not(:valid)` are identical.
+
+## 1.4 Structual Selectors
+
+- :root
+- :first-child :nth-child
+- :first-of-type
+  ...
+
+The structual selectors target on elements on the page based on their relationship other elements in the DOM.
+
+### 1.4.1 first/last child
+
+```css
+body .foo:last-child {
+}
+```
+
+it will match the last child element inside the `<body>` which also has a class of `foo`.
+
+```css
+p.foo:last-child {
+}
+```
+
+it will find all the last child inside a `<p>` tag which also has the class of `foo`.
+
+### 1.4.2 nth pseudo class
+
+NOTE: css uses 1 based index (starts from 1)
+
+```html
+<ul>
+  <li>item 1</li>
+  <li>item 2</li>
+  <li>item 3</li>
+  <li>item 4</li>
+  <li>item 5</li>
+  <li>item 6</li>
+  <li>item 7</li>
+  <li>item 8</li>
+  <li>item 9</li>
+  <li>item 10</li>
+</ul>
+```
+
+```css
+li:first-child,
+li:last-child {
+  will match 1 and 10
+}
+
+li:nth-child(even) {
+  will match 2,4,6,8,10
+}
+
+li:nth-child(3) {
+  will match 3
+}
+
+li:nth-of-type(4n) {
+  will match 4, 8
+}
+
+li:nth-of-type(3n-1) {
+  will match 2, 5, 8
+}
+```
