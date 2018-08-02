@@ -431,3 +431,43 @@ solution: 6666666~
   }
 }
 ```
+
+## 1.7 Pseudo Elements
+
+- ::first-line ::first-letter
+- ::selection (not in specification)
+- ::before
+- ::after
+
+### 1.7.1 ::selection
+
+```css
+.foo::selection {
+  background-color: red;
+}
+```
+
+The selected part (mouse highlighted) will become to red instead of blue.
+
+### 1.7.2 ::before and ::after
+
+```html
+<p>Im the content</p>
+```
+
+```css
+p::before {
+  content: "before- ";
+  font-weight: bold;
+}
+
+p::after {
+  content: " -after";
+  font-weight: bold;
+}
+```
+
+you will see the following
+**before-** Im the content **-after**
+
+always add a content to `::before` and `::after`, and don't put them on self-closing tags, one more thing, you can't select or highlight these pseudo elements because they are not exist on your html page.
