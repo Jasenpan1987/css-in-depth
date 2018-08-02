@@ -323,3 +323,111 @@ li:nth-of-type(3n-1) {
   will match 2, 5, 8
 }
 ```
+
+### 1.4.3 root and empty
+
+`:root` selector refers to the root of the document, which is normally `<html>`.
+You can define your `rem` unit here.
+
+`:empty` selector refers to the elements that is empty, such as self-closing elements `<img />` and `<input>`, also `<div></div>` is an empty element, even `<div><!-- hello --></div>` is also an empty element.
+
+## 1.5 Other logical combinators
+
+### 1.5.1 negation
+
+`:not(simple selector)` selector will match everything which is not satisfy the condition. Here simple selector means any non-combined selectors such as `(.foo.bar)`.
+
+```css
+div:not(.foo) {
+}
+```
+
+This will match all the `<div>` elements don't have the `foo` class.
+
+`:not` doesn't have any specificity, the previous selector and the simple selector inside the brackets give the specificity.
+The previous example has `0-1-1` in it's specificity because it has 1 element selector and 1 class selector.
+
+```css
+div:not(.foo,.bar) {
+  only work in safari
+}
+==
+div:not(.foo):not(.bar){
+  work in every modern browser
+}
+```
+
+### 1.5.2 link pseudo class
+
+`:link`, `:visited` are link pseudo classes, and `:hover`, `:active`, `:focus` are user action pseudo classes. When you want to add style on `:focus` (mouse), also do it on `active`(keyboard).
+
+## 1.6 Specificity
+
+simple case
+
+- \* , +, >, \_ = 0-0-0
+- element = 0-0-1
+- class = 0-1-0
+- [attr=val] = 0-1-0
+- :not(.foo) = 0-1-0 // not has no value, but the class has 0-1-0
+- pseudo elem = 0-1-0
+- id = 1-0-0 // try not to use
+- style = 1-0-0-0 // bad
+- !important = 1-0-0-0-0 // bad
+
+complex case
+
+- li[title=bar] = 0-1-1
+- li.foo = 0-1-1
+- li:nth-child(3)~span = 0-1-2
+- form input[type=text] = 0-1-2
+- li.foo:nth-of-type(3n) = 0-2-1
+- input[type=checkbox]:not(.foo) = 0-2-1
+
+### 1.6.1 Specificity tricks
+
+1)
+
+```html
+<div class="foo">Foo</div>
+```
+
+```css
+.foo {
+  color: red; // try override me
+}
+```
+
+To override it without changing the html, we can do this, but don't forget to add comments
+
+```css
+.foo.foo {
+  // it will give higher specificity
+  color: blue;
+}
+```
+
+2)
+
+```html
+<div class="foo">Foo</div>
+```
+
+```css
+.foo {
+  color: yellow !important; // try override me!
+}
+```
+
+solution: 6666666~
+
+```css
+.foo {
+  animation: colorhack forwards;
+}
+@keyframe colorhack {
+  100% {
+    color: blue;
+  }
+}
+```
