@@ -471,3 +471,123 @@ you will see the following
 **before-** Im the content **-after**
 
 always add a content to `::before` and `::after`, and don't put them on self-closing tags, one more thing, you can't select or highlight these pseudo elements because they are not exist on your html page.
+
+# 2. Generated Content
+
+## 2.1 Attribute values
+
+```css
+a[href^="http"]:hover {
+  position: relative;
+}
+
+a[href^="http"]:hover:after {
+  content: attr(href);
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  color: white;
+  background-color: black;
+  padding: 3px 5px;
+  line-height: 1;
+}
+```
+
+It added pseudo elements after each `<a>` which has an external link, the `attr(href)` will give us the actual url.
+
+## 2.2 counter
+
+```html
+<p>Hello this is paragraph</p>
+<p>Hello this is paragraph</p>
+<p>Hello this is paragraph</p>
+<p>Hello this is paragraph</p>
+```
+
+```css
+body {
+  counter-reset: paractr;
+}
+p {
+  counter-increment: paractr;
+}
+p:after {
+  content: " - " counter(paractr);
+  color: red;
+}
+```
+
+## 2.3 Image
+
+```css
+.showMe {
+  position: relative;
+}
+.showMe:hover::after {
+  position: absolute;
+  content: url(attr(data-url)); /* doesn't work */
+  content: url(estelle.svg); /* does work */
+  width: 200px;
+  height: 200px;
+  color: blue;
+  bottom: -39px;
+  left: 20px;
+}
+```
+
+## 2.4 Add a bubble
+
+```css
+.quote {
+  border-radius: 10px;
+  position: relative;
+  padding: 20px;
+  background-color: red;
+  color: white;
+}
+.quote:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 20px solid blue;
+  border-color: red transparent transparent transparent;
+  bottom: -39px;
+  left: 20px;
+}
+```
+
+# 3. Media Query
+
+## 3.1 Media type and screen size
+
+```css
+@media screen and (max-width: 600px) {
+  #presentation {
+    background: red;
+  }
+}
+@media screen and (orientation: portrait) {
+  #presentation {
+    background: yellow;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  a[href^="mailto:"]:before {
+    content: url(icons/email.gif);
+  }
+}
+```
+
+- Portrait basically means the width is less than its height
+
+And you can even do this:
+
+```html
+<link rel='stylesheet'
+media='screen and (min-width: 320px) and (max-width: 480px)'
+href='css/smartphone.css' />
+```
+
+- **You don't want to pick a break point to fit a specific device, you only want to pick break points that fits your design.**
