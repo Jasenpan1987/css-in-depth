@@ -1010,3 +1010,241 @@ div > div {
   flex: 40%;
 }
 ```
+
+# 6. Tables
+
+## 6.1 Table structure
+
+```html
+<table>
+  <caption></caption>
+  <colgroup>
+    <col/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>
+```
+
+## 6.2 Caption
+
+- The title of the table.
+- Always the first child of the table.
+- Can be styled
+
+```css
+table {
+  caption-side: bottom; // default is top
+}
+
+caption {
+  color: #cc0000;
+  font-weight: bold;
+}
+```
+
+## 6.3 Border and spacing
+
+```css
+table,
+th,
+td {
+  border: 1px solid;
+}
+table {
+  border-spacing: 10px 5px;
+  border-collapse: collapse;
+}
+```
+
+`border-collapse: separate | collapse | inherit`
+
+When the borders are collapsed border-spacing is relevant.
+
+`table, td, th {border: none;}`
+
+`table {border-spacing: 5px 10px;}`
+
+- one length: vertical and horizontal padding are the same.
+- two lengths: first is horizontal, second is vertical
+- Note: not TRouBLe
+- Irrelevant if border-collapse: collapse
+- Empty space is part of the table, not the column, tbody, row or cell.
+
+## 6.4 Other table properties
+
+### 6.4.1 Show / hide empty cells
+
+`empty-cell: show | hide`
+
+is similar to
+
+`td:empty, th:empty { visibility: none; }`
+
+### 6.4.2 Verticle align
+
+```css
+vertical-align: baseline | sub | super | text-top | text-bottom | middle | top |
+  bottom | <percentage> | <length>;
+```
+
+# 7. Css Grids
+
+## 7.1 Terminology
+
+- Grid lines: The vertical and horizontal lines that divide the grid and separate the columns and rows. Start counting at 1, not 0.
+- Grid cell: A single child or unit of a CSS grid.
+- Grid area: Any rectangular space surrounded by four grid lines. Can contain any number of grid cells.
+- Grid track: The space between two grid lines. This space can be horizontal or vertical: a grid row or grid column
+- Grid row: A horizontal grid track.
+- Grid column: A vertical grid track.
+- Gutter: Space between two rows and two columns.
+
+## 7.2 Grid Container Properties
+
+- `fr` is the fraction unit of one space, `repeat(4, 1fr)` means divide the space into 4, and each one takes one unit.
+- `display: grid` will turn the elements into grid mode, and `display: grid-inline` will give each element the width of auto.
+
+```html
+<div>
+  <span>1</span>
+  <span>2</span>
+  <span>3</span>
+  <span>4</span>
+  <span>5</span>
+  <span>6</span>
+  <span>7</span>
+  <span>8</span>
+  <span>9</span>
+</div>
+```
+
+```css
+div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+```
+
+will give you a 3 X 3 grid display.
+
+## 7.2 Colmuns and Rows
+
+### 7.2.1 basic row and column
+
+```css
+grid-template-columns:
+  150px 150px 150px; // 1
+  repeat(3, 150px); // 2
+  275px repeat(2, 150px); // 3
+  100px repeat(2, 1fr) 2fr; // 4
+```
+
+1. 3 columns, each column takes 150px wide.
+2. 3 columns, each column takes 150px wide.
+3. 3 columns, first columns takes 275px and the other two take up the rest of the space.
+4. 4 columns, first columns takes 100px and second and third take up one unit of the rest of the space and the fourth column takes two units.
+
+```css
+grid-template-rows:
+  150px 150px 150px; // 1
+  repeat(3, 150px); // 2
+  275px repeat(2, 150px); // 3
+  100px 1fr 2fr; // 4
+```
+
+1. 3 rows, each row takes 150px height.
+2. 3 rows, each row takes 150px height.
+3. 3 rows, first row takes 275px height, and the second and the third row takes 150px height.
+4. 3 rows, the first row takes 100px height, the second row takes 1 unit of the free space, and the last row takes 2 units.
+
+### 7.2.2 name grid line
+
+```css
+grid-template-columns: [start] 150px 150px 150px [end];
+```
+
+This basically says first line will be called "start", second line no name, thrid line no name, fourth line no name, and the fifth line will be called "end". This is easier sometimes because we don't have to remember the line numbers.
+
+### 7.2.3 Gutters
+
+```css
+ol {
+  grid-template-columns: repeat(2, 2fr) repeat(3, 1fr) 3fr;
+  grid-template-rows: 2fr 125px repeat(2, 4em);
+  grid-row-gap: 10px; // 1
+  grid-column-gap: 20px; // 2
+  grid-gap: 10px 20px; // 3
+  grid-gap: 1em; // 4
+}
+```
+
+1. Give a 10px gap between rows.
+2. Give a 20px gap between columns.
+3. Equal to 1 + 2
+4. Give a 1em gap to both row and column.
+
+```css
+// in an ordered list with 35 li
+ol {
+  display: grid;
+  grid-template-column: 10px 20px 40px 80px 160px 320px 640px;
+  grid-template-row: 10px 20px 40px 80px 160px 320px 640px;
+  grid-gap: 20px;
+  list-style-type: none;
+}
+```
+
+### 7.2.4 Position an item
+
+```css
+.myItem {
+  grid-row-start: 2;
+  grid-row-end: 4;
+  grid-column-start: 2;
+  grid-column-end: 5;
+}
+.myItem {
+  grid-row: 2 / 4;
+  grid-column: 2 / 5;
+}
+.myItem {
+  grid-area: 2 / 2 / 4 / 5;
+}
+```
+
+These three are totally identical.
+
+### 7.2.5 Holy Grail Layout
+
+```html
+<body>
+  <header></header>
+  <article></article>
+  <nav></nav>
+  <aside></aside>
+  <footer></footer>
+</body>
+```
+
+```css
+body {
+  display: grid;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-template-columns: 3em 1fr 1.5em;
+  grid-gap: 1em;
+}
+```
