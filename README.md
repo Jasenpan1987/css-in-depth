@@ -1232,11 +1232,11 @@ These three are totally identical.
 
 ```html
 <body>
-  <header></header>
-  <article></article>
-  <nav></nav>
-  <aside></aside>
-  <footer></footer>
+  <header>header</header>
+  <article>article</article>
+  <nav>nav</nav>
+  <aside>aside</aside>
+  <footer>footer</footer>
 </body>
 ```
 
@@ -1247,4 +1247,107 @@ body {
   grid-template-columns: 3em 1fr 1.5em;
   grid-gap: 1em;
 }
+
+header {
+  background-color: grey;
+  grid-row: 1 / 2;
+  grid-column: 1 / 4;
+}
+
+footer {
+  background-color: yellow;
+  grid-row: 3 / 4;
+  grid-column: 1 / 4;
+}
+
+nav {
+  background-color: red;
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+aside {
+  background-color: pink;
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+}
+
+article {
+  background-color: blue;
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
 ```
+
+### 7.2.6 Named Grid Area
+
+```html
+<body>
+  <header>header</header>
+  <article>article</article>
+  <nav>nav</nav>
+  <aside>aside</aside>
+  <footer>footer</footer>
+</body>
+```
+
+```css
+body {
+  display: grid;
+  grid-template-rows: 2fr 9fr 2fr;
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-gap: 1em;
+  grid-template-areas:
+    "header header header"
+    "nav article aside"
+    "footer footer footer";
+}
+header {
+  background-color: grey;
+  grid-area: header;
+}
+
+footer {
+  background-color: yellow;
+  grid-area: footer;
+}
+
+nav {
+  background-color: red;
+  grid-area: nav;
+}
+
+aside {
+  background-color: pink;
+  grid-area: aside;
+}
+
+article {
+  background-color: blue;
+  grid-area: article;
+}
+```
+
+## 7.3 Alignment
+
+### Container Properties
+
+```
+justify-items // horrizontal
+align-items // verticle
+justify-content
+align-content
+grid-auto-columns
+grid-auto-rows
+grid-auto-flow
+grid
+```
+
+### Item Properties
+
+```
+justify-self
+align-self
+```
+
+https://gridbyexample.com/
