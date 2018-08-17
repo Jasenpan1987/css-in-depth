@@ -1351,3 +1351,149 @@ align-self
 ```
 
 https://gridbyexample.com/
+
+# 8. Background and Borders
+
+## 8.1 Backgrounds
+
+### 8.1.1 Background image
+
+`background-image: url(path/aSingleImage.jpg);`
+
+Background short hands
+
+- background-repeat
+- background-attachment
+- background-position
+- background-color
+
+Don't use background short hands, it will overwrite other background properties. Use the specific properties
+
+```css
+background: blue; // the other properties will become to the default values!!!
+
+background-color: blue; // others will remain
+```
+
+### 8.1.2 Multiple Background image
+
+`background-image: url(green.gif), url(blue.gif);`
+
+- Comma separated
+- layered front to back
+- Include background-color
+
+### 8.1.2 Background-repeat
+
+```css
+background-repeat: repeat | repeat-x | repeat-y | no-repeat | space | round;
+```
+
+- `repeat` is the default value
+- `space` and `around` works like `repeat` but has no cut offs, because they give the space to the margin of each images, `around` will resize the images.
+
+### 8.1.3 Background-attachment
+
+```css
+background-attachment: fixed | local | scroll;
+```
+
+- `fixed` will stay behind the content
+- `local` will stay where it is
+- `scroll` will stay at the same position even scroll
+
+### 8.1.4 background-position
+
+```css
+div {
+  background-position: 75% 75%;
+}
+```
+
+This basically means, the image will be positioned on 75% from the top corner and 75% from the left corner. But in css, we can do positioning relative to any corner.
+
+```css
+background-position: right 50px bottom 50px;
+```
+
+This will make the image 50px from the bottom and 50px from the right. And the top left corner is the default.
+
+### 8.1.4 background clip and origin
+
+example
+
+```html
+<div></div>
+```
+
+```css
+div {
+  border: 15px dotted #707071;
+  border-radius: 5px;
+  background-origin: border-box;
+  background-clip: border-box;
+}
+
+background-image: radial-gradient(
+  circle closest-side at 50px 50px,
+  transparent 70%,
+  #58ade3 70%,
+  95%,
+  transparent 95%
+);
+background-size: 95px 95px;
+background-repeat: no-repeat;
+height: 200px;
+width: 200px;
+margin: auto;
+```
+
+try to change around the `background-origin` and `background-clip` between `content-box`, `padding-box` and `border-box` to see the difference.
+
+### 8.1.5 Background-size
+
+```css
+background-size: auto | contain | cover | 100px 200px;
+```
+
+- auto: image is actual size
+- cover: image maintains aspect ratio, covering entire element even if that means part of the image is cut off.
+- contain: image maintains aspect ratio, fitting the entire image into the element even if that means part of the background is showing or the image repeats.
+- length: image maintains aspect ratio, growing or shrinking so that the width is the length defined
+- auto length: image maintains aspect ratio, growing or shrinking so that the height is the length defined
+- length length: image DOES NOT NECESSARILY maintain its aspect ratio, height and width both grow or shrink to the length defined
+
+## 8.2 Border
+
+### 8.2.1 border-color and border style
+
+- The default border color is `current-color` and we can use any color structure to define a border-color.
+
+- The border style has the following values:
+  - none: No border. As if border-width: 0; except with border-image
+  - hidden: Same as none, but relevant in border-collapsed tables
+  - dotted: Round dots.
+  - dashed: Square-ended dashes.
+  - solid: a single solid line.
+  - double: Two parallel solid lines. Only relevant if border-width >= 3px. line + space + line = border-width value.
+  - groove: Shadow effect using two colors on each side, with a slightly lighter and darker than the border-color value. Top / left half of each side darker.
+  - ridge: Looks as if it were coming out of the canvas. Bottom / Right darker
+  - inset: Looks sunken into page. Top and left border are made darker, bottom and right are lighter.. Treated as ridge in border-collapsed tables.
+  - outset: Looks as if popping out of page. Bottom and right are darker. Top and left border are lighter.. Treated as groove in border-collapsed tables.
+- short hands: `3px solid #fff;`
+
+### 8.2.2 border-radius and border image
+
+Possible values:
+
+```css
+border-radius: 0;
+border-radius: 20px;
+border-radius: 50%;
+border-radius: 10px 30px; // top-left+right-bottom and top-right+left-bottom
+
+border-top-left-radius
+border-top-right-radius
+border-bottom-right-radius
+border-bottom-left-radius
+```
