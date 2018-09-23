@@ -1497,3 +1497,89 @@ border-top-right-radius
 border-bottom-right-radius
 border-bottom-left-radius
 ```
+
+# 9. Css Gradient
+
+Gradient is a sort of image, so we can use it anywhere when we want to use an image, such as background image, cursor image, list-style-type, border-image, pseudo element content. Generally there are 4 types of gradients:
+
+1. Linear
+2. Repeat Linear
+3. Radial
+4. Repeat Radial
+
+## 9.1 Syntax
+
+### 9.1.1 Linear
+
+```css
+linear-gradient([<angle> | to<side-or-corner>,]?[<color-stop>[,color-hint]?,]# <color-stop>)
+```
+
+- Use "to" for the key terms
+- 0 degree is to top
+- Angles go closewise
+
+```css
+.slide {
+  background-image: linear-gradient(purple, red);
+}
+```
+
+is equal to
+
+```css
+.slide {
+  background-image: linear-gradient(to bottom, purple 0%, red 100%);
+}
+```
+
+### 9.1.2 Radial
+
+```css
+radial-gradient([<shape> || <size> at <position>]?[<color-stop>[, <color-hint>]?, ]# <color-stop>)
+```
+
+- Use "at" with position
+- Position is center of gradient
+- If shape is specified as circle or omitted, the size can be a length or a percentage
+
+### 9.2 Color stop
+
+```css
+<color> [<length> || <percentage>]?
+```
+
+```css
+.slide {
+  background-image: linear-gradient(
+    red 0vh,
+    orange 20vh,
+    yellow 40vh,
+    green 60vh,
+    blue 80vh,
+    purple 100vh
+  );
+}
+```
+
+0 -> 20: from red to orange,
+20 -> 40: from orange to yellow
+...
+
+### 9.3 Color hints
+
+```scss
+// 1.
+linear-gradient(purple, red);
+
+// 2.
+linear-gradient(purple, 50%, red);
+
+// 3.
+linear-gradient(purple, 20%, red);
+
+// 4.
+linear-gradient(purple, 80%, red);
+```
+
+The 50%, 20% and 80% are color hints, it tells where the mid-point of the color change should happen.
